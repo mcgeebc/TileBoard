@@ -893,8 +893,8 @@ App.controller('Main', function ($scope, $timeout, $location, Api, tmhDynamicLoc
 
          const attrs = entity.attributes || {};
          const sliderConf = {
-            min: config.min ?? attrs.min ?? defaults.min,
-            max: config.max ?? attrs.max ?? defaults.max,
+            min: config.min || attrs.min || defaults.min,
+            max: config.max || attrs.max || defaults.max,
             step: config.step || attrs.step || defaults.step,
             request: config.request || defaults.request,
             curValue: undefined, // current value received from HA
@@ -908,9 +908,9 @@ App.controller('Main', function ($scope, $timeout, $location, Api, tmhDynamicLoc
                sliderConf.value = newValue;
             } else {
                const { attributes, state } = entity;
-               sliderConf.curValue = toSafeNumber(+attributes[config.field]) ?? toSafeNumber(+attributes[defaults.field]) ?? toSafeNumber(+state)
-                  ?? config.value ?? defaults.value
-                  ?? config.min ?? attributes.min ?? defaults.min ?? 0;
+               sliderConf.curValue = toSafeNumber(+attributes[config.field]) ?? toSafeNumber(+attributes[defaults.field]) || toSafeNumber(+state)
+                  || config.value || defaults.value
+                  || config.min ?? attributes.min || defaults.min || 0;
                if (sliderConf.oldValue !== sliderConf.curValue) {
                   sliderConf.oldValue = sliderConf.curValue;
                   sliderConf.value = sliderConf.curValue;
